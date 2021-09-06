@@ -1,13 +1,12 @@
 
 .container {
-    /* height: 900px; */
+    height: 100%;
 
 }
 
 aside {
     background-color: pink;
     height: 90%;
-
 }
 
 article {
@@ -15,9 +14,17 @@ article {
 }
 
 .weatherData {
-    height: 500px;
+    border: 2px solid gray;
+    height: 50%;
 }
 
+#forecast {
+    list-style: none;
+
+}
+li.forecastDay {
+    display: inline;
+}
 
 
 

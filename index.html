@@ -8,53 +8,113 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/styles.css">
-        <title>Weather Dashboard</title>
+    <title>Weather Dashboard</title>
 </head>
 
 <body>
-    <header>Weather Dashboard</header>
+    <header>Weather Dashboard WITH GRADIENT!</header>
     <main class="container">
         <div class="row">
 
             <!-- Left half of page -->
-            <aside class="col">
-                <div id="search">
-                    <div>Search for a city</div>
-                    <div><input id="searchText" type="text" placeholder="Enter city here"></div>
-                    <div><button id="searchButton">Search</button></div>
-                </div>
-                <div class="cityList">
-                    <ul>
-                        <li>Austin</li>
-                        <li>New York</li>
-                    </ul>
-                </div>
+            <aside class="col-3">
+                <label for="searchText">Search for a city:</label>
+                <input id="searchText" type="text" placeholder="Enter city here">
+                <button type="button" class="btn btn-primary">Search</button>
+                <hr />
+                <ul id="cityList">
+                    <li>Austin</li>
+                    <li>New York</li>
+                    <li>New York</li>
+                    <li>New York</li>
+                    <li>New York</li>
+                    <li>New York</li>
+                    <li>New York</li>
+                </ul>
             </aside>
 
             <!-- Right half of page -->
-            <article class="col">
+            <article class="col-9">
                 <section class="weatherData">
-                    Atlanta (3/30-2021), etc.
+                    <div>Atlanta (3/30-2021)</div>
+                    <div>Temp: 74.01 def F</div>
+                    <div>Wind: 6.678 MPH</div>
+                    <div>Humidity: 46%</div>
+                    <div>UV index: square w/ 0.47 label?</div>
                 </section>
-                <ul class="forcast">
-                    <li class="forcastDay"></li>
-                    <li class="forcastDay"></li>
-                    <li class="forcastDay"></li>
-                    <li class="forcastDay"></li>
-                    <li class="forcastDay"></li>
+                <label for="forecast">5-Day Forecast</label>
+                <ul id="forecast" class="row">
+                    <li class="col-2 forecastDay">
+                        <div class="card-body">
+                            <h5 class="card-title">3/31/2021</h5>
+                            <p>icon here!!!!!!</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Temp: 73.00 def F</li>
+                            <li class="list-group-item">Wind: 9.53 MPG</li>
+                            <li class="list-group-item">Humidity: 66 %</li>
+                        </ul>
+                    </li>
+                    <li class="col-2 forecastDay">
+                        <div class="card-body">
+                            <h5 class="card-title">3/31/2021</h5>
+                            <p>icon here!!!!!!</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Temp: 73.00 def F</li>
+                            <li class="list-group-item">Wind: 9.53 MPG</li>
+                            <li class="list-group-item">Humidity: 66 %</li>
+                        </ul>
+                    </li>
+                    <li class="col-2 forecastDay">
+                        <div class="card-body">
+                            <h5 class="card-title">3/31/2021</h5>
+                            <p>icon here!!!!!!</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Temp: 73.00 def F</li>
+                            <li class="list-group-item">Wind: 9.53 MPG</li>
+                            <li class="list-group-item">Humidity: 66 %</li>
+                        </ul>
+                    </li>
+                    <li class="col-2 forecastDay">
+                        <div class="card-body">
+                            <h5 class="card-title">3/31/2021</h5>
+                            <p>icon here!!!!!!</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Temp: 73.00 def F</li>
+                            <li class="list-group-item">Wind: 9.53 MPG</li>
+                            <li class="list-group-item">Humidity: 66 %</li>
+                        </ul>
+                    </li>
+                    <li class="col-2 forecastDay">
+                        <div class="card-body">
+                            <h5 class="card-title">3/31/2021</h5>
+                            <p>icon here!!!!!!</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Temp: 73.00 def F</li>
+                            <li class="list-group-item">Wind: 9.53 MPG</li>
+                            <li class="list-group-item">Humidity: 66 %</li>
+                        </ul>
+                    </li>
                 </ul>
             </article>
 
         </div>
     </main>
+
+    <!-- JQuery & Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+
 </html>
