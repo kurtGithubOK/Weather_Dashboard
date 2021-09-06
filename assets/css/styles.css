@@ -1,0 +1,25 @@
+
+.container {
+    /* height: 900px; */
+
+}
+
+aside {
+    background-color: pink;
+    height: 90%;
+
+}
+
+article {
+    background-color: lightblue;
+}
+
+.weatherData {
+    height: 500px;
+}
+
+
+
+
+
+
