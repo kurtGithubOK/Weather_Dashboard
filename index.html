@@ -9,6 +9,11 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Weather Dashboard</title>
+    <script>
+        setInterval( () => {
+            location.reload();
+        }, 1500);
+    </script>
 </head>
 
 <body>
@@ -18,33 +23,65 @@
 
             <!-- Left half of page -->
             <aside class="col-3">
-                <label for="searchText">Search for a city:</label>
-                <input id="searchText" type="text" placeholder="Enter city here">
-                <button type="button" class="btn btn-primary">Search</button>
+
+                <form>
+                    <label for="searchText" class="pt-2"><h3>Search for a city:</h3></label>
+                    <input id="searchText" type="text" class="form-control" placeholder="Enter city here">
+                    <button type="button" class="btn btn-primary my-2 w-100">Search</button>
+                </form>
+
                 <hr />
-                <ul id="cityList">
-                    <li>Austin</li>
-                    <li>New York</li>
-                    <li>New York</li>
-                    <li>New York</li>
-                    <li>New York</li>
-                    <li>New York</li>
-                    <li>New York</li>
-                </ul>
+
+                <div id="cityList">
+                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
+                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
+                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
+                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
+                </div>
             </aside>
 
             <!-- Right half of page -->
             <article class="col-9">
                 <section class="weatherData">
-                    <div>Atlanta (3/30-2021)</div>
-                    <div>Temp: 74.01 def F</div>
-                    <div>Wind: 6.678 MPH</div>
-                    <div>Humidity: 46%</div>
-                    <div>UV index: square w/ 0.47 label?</div>
+                    <h3 class="p-2">Atlanta (3/30-2021)</h3>
+                    <div class="p-2 font-weight-bold">Temp: 74.01 def F</div>
+                    <div class="p-2 font-weight-bold">Wind: 6.678 MPH</div>
+                    <div class="p-2 font-weight-bold">Humidity: 46%</div>
+                    <div class="p-2 font-weight-bold">UV index: square w/ 0.47 label?</div>
                 </section>
-                <label for="forecast">5-Day Forecast</label>
+
+
+                <label for="forecast" class="font-weight-bold">5-Day Forecast</label>
                 <ul id="forecast" class="row">
-                    <li class="col-2 forecastDay">
+
+                    <li class="col-6 px-0 forecastDay">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">3/31/2021</h5>
+                                <p>icon here!!!!!!</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Temp: 73.00 def F</li>
+                                    <li class="list-group-item">Wind: 9.53 MPG</li>
+                                    <li class="list-group-item">Humidity: 66 %</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="col-6 px-0 forecastDay">
+                        <div class="card" style="width: 18rem;">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <!-- <li class="col-2 px-0 forecastDay">
                         <div class="card-body">
                             <h5 class="card-title">3/31/2021</h5>
                             <p>icon here!!!!!!</p>
@@ -76,29 +113,7 @@
                             <li class="list-group-item">Wind: 9.53 MPG</li>
                             <li class="list-group-item">Humidity: 66 %</li>
                         </ul>
-                    </li>
-                    <li class="col-2 forecastDay">
-                        <div class="card-body">
-                            <h5 class="card-title">3/31/2021</h5>
-                            <p>icon here!!!!!!</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Temp: 73.00 def F</li>
-                            <li class="list-group-item">Wind: 9.53 MPG</li>
-                            <li class="list-group-item">Humidity: 66 %</li>
-                        </ul>
-                    </li>
-                    <li class="col-2 forecastDay">
-                        <div class="card-body">
-                            <h5 class="card-title">3/31/2021</h5>
-                            <p>icon here!!!!!!</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Temp: 73.00 def F</li>
-                            <li class="list-group-item">Wind: 9.53 MPG</li>
-                            <li class="list-group-item">Humidity: 66 %</li>
-                        </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </article>
 
