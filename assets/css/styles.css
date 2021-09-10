@@ -15,7 +15,7 @@ article {
 
 .weatherData {
     border: 2px solid gray;
-    height: 50%;
+    /* height: 50%; */
 }
 
 #forecast {
