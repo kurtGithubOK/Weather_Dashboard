@@ -25,9 +25,7 @@
         <!-- Left half of page -->
         <aside class="col-3">
             <form>
-                <label for="searchText" class="pt-2">
-                    <h4>Search for a city:</h4>
-                </label>
+                <label for="searchText" class="pt-2 h4">Search for a city:</label>
                 <input id="searchText" type="text" class="form-control" placeholder="Enter city here" value="hello">
                 <button id="searchButton" type="button" class="btn btn-primary my-2 w-100">Search</button>
             </form>
@@ -47,10 +45,10 @@
             <section id="todaysWeather" class="row">
                 <div class="col">
                     <h3 class="p-2">Atlanta (3/30-2021)</h3>
-                    <div class="p-2 font-weight-bold">Temp: 74.01 def F</div>
-                    <div class="p-2 font-weight-bold">Wind: 6.678 MPH</div>
-                    <div class="p-2 font-weight-bold">Humidity: 46%</div>
-                    <div class="p-2 font-weight-bold">UV index: square w/ 0.47 label?</div>
+                    <div class="p-2 font-weight-bold">Temp: <span id="todaysTemp">74.01</span>&deg; F</div>
+                    <div class="p-2 font-weight-bold">Wind: <span id="todaysWind">6.678</span> MPH</div>
+                    <div class="p-2 font-weight-bold">Humidity: <span id="todaysHumidity">46</span>%</div>
+                    <div class="p-2 font-weight-bold">UV index: <span id="todaysUVIndex">square w/ 0.47 label?</span></div>
                 </div>
             </section>
 
