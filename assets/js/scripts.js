@@ -9,9 +9,15 @@ function searchButtonClicked(event) {
 searchButton.addEventListener('click', searchButtonClicked);
 
 const getTodaysWeather = (cityName) => {
-};    
-const getForecast = (cityName) => {
+};
+const makeForecastWeatherUrl = (cityName) => {
     // https://api.openweathermap.org/data/2.5/forecast?q=seattle&appid=f1904d406184f3cd6d2b1fa662fe0acf&units=imperial
+    let url = openWeatherMapUrl;
+    url += 'forecast';
+    url += '?q=' + cityName;
+    url += '&appId=' + apiKey;
+    url += '&units=imperial';
+    return url;
 }
 
 function makeTodaysWeatherUrl(cityName) {
@@ -25,24 +31,57 @@ function makeTodaysWeatherUrl(cityName) {
 }
 
 const cityName = 'seattle';
-const todaysWeatherUrl = makeTodaysWeatherUrl(cityName, apiKey);
-console.log('todays weather url', todaysWeatherUrl)
+const todaysWeatherUrl = makeTodaysWeatherUrl(cityName);
 
-fetch(todaysWeatherUrl)
+// fetch(todaysWeatherUrl)
+//     .then(function (response) {
+//         return response.json();
+//     })
+//     .then((data) => {
+//         console.log('weather data: ', data);
+//         const temerature = data.main.temp;
+//         console.log('Temp:', temerature);
+//         const windSpeed = data.wind.speed;
+//         console.log('windSpeed:', windSpeed)
+//         const humidity = data.main.humidity;
+//         console.log('Humidity:', humidity)
+//         // HOW TO GET UV INDEX???????????????????
+//     })
+//     .catch(function (err) {
+//         console.log("Something went wrong!", err);
+//     });
+
+const forecastWeatherUrl = makeForecastWeatherUrl(cityName);
+
+fetch(forecastWeatherUrl)
     .then(function (response) {
         return response.json();
     })
     .then((data) => {
-        console.log('weather data: ', data);
-        const temerature = data.main.temp;
-        console.log('Temp:', temerature);
-        const windSpeed = data.wind.speed;
-        console.log('windSpeed:', windSpeed)
-        const humidity = data.main.humidity;
-        console.log('Humidity:', humidity)
-        // HOW TO GET UV INDEX???????????????????
+        const forecastList = data.list;
+        for (let i = 0; i < 5; i++) {
+            const forecastListItem = forecastList[i];
+            console.log('forecastListItem', forecastListItem);
+
+            // const date = forecastListItem.dt;
+            // console.log('date', date);
+            // const moment = moment(date, 'X');
+            // console.log('xxxxxx: ', moment.toString());
+
+            const temperature = forecastListItem.main.temp;
+            const windSpeed = forecastListItem.wind.speed;
+            const humidity = forecastListItem.main.humidity;
+            console.log('humidity', humidity)
+
+        }
+
     })
     .catch(function (err) {
         console.log("Something went wrong!", err);
     });
+
+
+
+
+
 
