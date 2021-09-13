@@ -4,7 +4,7 @@ const searchButton = document.getElementById('searchButton');
 const searchText = document.getElementById('searchText');
 
 function searchButtonClicked(event) {
-    console.log('clcikceddde', searchText);
+    console.log('clcikcffffffeddde', searchText);
     
 }
 
