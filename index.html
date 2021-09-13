@@ -16,91 +16,100 @@
     </script>
 </head>
 
-<body>
-    <header>Weather Dashboard</header>
-    <main class="container-fluid">
-        <div class="row">
+<body class="container-fluid">
+    <div class="row">
+        <div class="col"><header class="text-center h3 text-light">Weather Dashboard</header></div>
+    </div>
 
-            <!-- Left half of page -->
-            <aside class="col-3">
+    <main class="row">
+        <!-- Left half of page -->
+        <aside class="col-3">
+            <form>
+                <label for="searchText" class="pt-2">
+                    <h4>Search for a city:</h4>
+                </label>
+                <input id="searchText" type="text" class="form-control" placeholder="Enter city here" value="hello">
+                <button id="searchButton" type="button" class="btn btn-primary my-2 w-100">Search</button>
+            </form>
 
-                <form>
-                    <label for="searchText" class="pt-2"><h4>Search for a city:</h4></label>
-                    <input id="searchText" type="text" class="form-control" placeholder="Enter city here" value="hello">
-                    <button id="searchButton" type="button" class="btn btn-primary my-2 w-100">Search</button>
-                </form>
+            <hr />
 
-                <hr />
+            <div id="cityList">
+                <!-- class="overflow-auto"???? -->
+            </div>
 
-                <div id="cityList">
-                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
-                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
-                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
-                    <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
+        </aside>
+
+        <!-- Right half of page -->
+        <article class="col-9">
+
+            <!-- Today's weather -->
+            <section id="todaysWeather" class="row">
+                <div class="col">
+                    <h3 class="p-2">Atlanta (3/30-2021)</h3>
+                    <div class="p-2 font-weight-bold">Temp: 74.01 def F</div>
+                    <div class="p-2 font-weight-bold">Wind: 6.678 MPH</div>
+                    <div class="p-2 font-weight-bold">Humidity: 46%</div>
+                    <div class="p-2 font-weight-bold">UV index: square w/ 0.47 label?</div>
                 </div>
-            </aside>
+            </section>
 
-            <!-- Right half of page -->
-            <article class="col-9 container">
+            <section class="row">
+                <div class="col">
+                    <label for="forecast" class="p-2 font-weight-bold">5-Day Forecast</label>
+                </div>
+            </section>
 
-                <!-- Today's weather -->
-                <section class="row weatherData">
-                    <div class="col">
-                        <h3 class="p-2">Atlanta (3/30-2021)</h3>
-                        <div class="p-2 font-weight-bold">Temp: 74.01 def F</div>
-                        <div class="p-2 font-weight-bold">Wind: 6.678 MPH</div>
-                        <div class="p-2 font-weight-bold">Humidity: 46%</div>
-                        <div class="p-2 font-weight-bold">UV index: square w/ 0.47 label?</div>
-                    </div>
-                </section>
+            <section class="row">
+                <div id="forecast" class="col d-inline-flex">
 
-                <!-- 5 day forecast label -->
-                <section class="row">
-                    <div class="col"><label for="forecast" class="p-2 font-weight-bold">5-Day Forecast</label></div>
-                </section>
-
-                <!-- 5 day forecast -->
-                <section id="forecast" class="row justify-content-around">
-
-
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-2">
-                                <h5 class="card-title">3-31-2021</h5>
-                                <p>icon here</p>
-                                <p class="card-text">Temp: 73.00 def F</p>
-                                <p class="card-text">Wind: 9.53 MPG</p>
-                                <p class="card-text">Humidity: 66 %</p>
-                            </div>
+                    <div class="card w-35 bg-primary">
+                        <div class="card-body p-2">
+                            <h5 class="card-title">3-31-2021</h5>
+                            <p>icon here</p>
+                            <p class="card-text">Temp: 73.00 def F</p>
+                            <p class="card-text">Wind: 9.53 MPG</p>
+                            <p class="card-text">Humidity: 66 %</p>
                         </div>
                     </div>
 
+                    <div class="card w-35 bg-primary">
+                        <div class="card-body p-2">
+                            <h5 class="card-title">3-31-2021</h5>
+                            <p>icon here</p>
+                            <p class="card-text">Temp: 73.00 def F</p>
+                            <p class="card-text">Wind: 9.53 MPG</p>
+                            <p class="card-text">Humidity: 66 %</p>
+                        </div>
+                    </div>
 
+                    <div class="card w-35 bg-primary">
+                        <div class="card-body p-2">
+                            <h5 class="card-title">3-31-2021</h5>
+                            <p>icon here</p>
+                            <p class="card-text">Temp: 73.00 def F</p>
+                            <p class="card-text">Wind: 9.53 MPG</p>
+                            <p class="card-text">Humidity: 66 %</p>
+                        </div>
+                    </div>
 
-
-
-
-
-
-
-                </section> <!-- End of 5-day forecase section -->
-            </article> <!-- End of right side of page -->
-        </div><!-- End of: <div class="row"> -->
+                </div>
+            </section>
+        </article>
     </main>
-
-    <!-- Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./assets/js/scripts.js"></script>
-
 </body>
+
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="./assets/js/scripts.js"></script>
 
 </html>

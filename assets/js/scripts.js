@@ -1,63 +1,63 @@
 const apiKey = 'f1904d406184f3cd6d2b1fa662fe0acf';
 const openWeatherMapUrl = 'https://api.openweathermap.org/data/2.5/';
+let previousCities = ['seattle', 'anchorage', 'denver']; // Trim down to one later.
+let previousCityIndex = 0;
 
+// Variables for divs.
 const forecastDiv = document.getElementById('forecast');
 const searchButton = document.getElementById('searchButton');
 const searchText = document.getElementById('searchText');
-function searchButtonClicked(event) {
-    console.log('now in searchButtonClicked():', searchText);
-}
+const cityListDiv = document.getElementById('cityList');
+
+// Register event handlers.
 searchButton.addEventListener('click', searchButtonClicked);
 
+function updateDisplay() {
+// Update list of cities.
+    updateListOfCities();
 
-//  <div class="col">
-// <div class="card">
-//     <div class="card-body p-2">
-//         <h5 class="card-title">3-31-2021</h5>
-//         <p>icon here</p>
-//         <p class="card-text">Temp: 73.00 def F</p>
-//         <p class="card-text">Wind: 9.53 MPG</p>
-//         <p class="card-text">Humidity: 66 %</p>
-//     </div>
-// </div>
-// </div> 
-const makeElement = (elementName, classArray, textContent) => {
-    const element = document.createElement(elementName);
-    for(classArrayElement of classArray) {
-        console.log(classArrayElement)
-        element.classList.add(classArrayElement);
-    }
-    element.textContent = textContent;
-    return element;
-};
+    // Update today's weather.
+    updateTodaysWeather();
+    
+    // Update forecast.
+    updateForecast();
+}
 
-// Create Card from the inside out.
-const makeForecastCards = (forecastData) => {
-    // for (let i = 0; i < forecastData.length; i++) { /////////////// change this at end
-    for (let i = 0; i < 5; i++) {
-        const forecastDay = forecastData[i];
-        const titleElement = makeElement('h5', ['card-title'], '6-6-66');
-        const iconElement = makeElement('p', ['card-text'], 'icon here??');
-        const tempElement = makeElement('p', ['card-text'], 'Temp: ' + 666);
-        const windElement = makeElement('p', ['card-text'], 'Wind: ' + 66);
-        const humidityElement = makeElement('p', ['card-text'], 'Humidity: ' + 99);
-        
-        const cardBodyElement = makeElement('div', ['card-body', 'p-2']);
-        cardBodyElement.appendChild(titleElement);
-        cardBodyElement.appendChild(iconElement);
-        cardBodyElement.appendChild(tempElement);
-        cardBodyElement.appendChild(windElement);
-        cardBodyElement.appendChild(humidityElement);
+function updateListOfCities() {
+    // Loop over list of cities and make buttons for each.
+    previousCities.forEach( (city) => {
+        // <button type="button" class="btn btn-secondary w-100 my-1">Austin</button>
+        const buttonElement = document.createElement('button');
+        buttonElement.classList.add('btn', 'btn-secondary', 'w-100', 'my-1');  // Change other code like this.
+        buttonElement.textContent = city;
+        cityListDiv.appendChild(buttonElement);
+    });
+}
+function updateTodaysWeather() {
+    // Make API call.
+    
+    // Update upper section.
+    
+}
+function updateForecast() {
+    // Make API call.
+    
+    // Update lower section.
+}
 
-        const cardElement = makeElement('div', ['card']);
-        cardElement.appendChild(cardBodyElement);
+// Event handlers. 
+function searchButtonClicked(event) {
+    console.log('now in searchButtonClicked():', searchText);
+    // Store city name in variable.
 
-        const colElement = makeElement('div', ['col']);
-        colElement.appendChild(cardElement);
-        forecastDiv.appendChild(colElement);
-    }
-};
-makeForecastCards([]);
+    // Searching for new city is similar to clicking on imaginary existing city button.
+    cityClicked();
+}
+function cityClicked(event) {
+    // Call update display with new value of city name.
+    updateDisplay();
+
+}
 
 
 const makeForecastWeatherUrl = (cityName) => {
@@ -135,7 +135,55 @@ const forecastWeatherUrl = makeForecastWeatherUrl(cityName);
 //         console.log("Something went wrong!", err);
 //     });
 
+// Utility functions.
+const makeElement = (elementName, classArray, textContent) => {
+    const element = document.createElement(elementName);
+    for(classArrayElement of classArray) {
+        console.log(classArrayElement)
+        element.classList.add(classArrayElement);
+    }
+    element.textContent = textContent;
+    return element;
+};
 
+// Create Card from the inside out.
+const makeForecastCards = (forecastData) => {
+    // for (let i = 0; i < forecastData.length; i++) { /////////////// change this at end
+    for (let i = 0; i < 5; i++) {
+        const forecastDay = forecastData[i];
+        const titleElement = makeElement('h5', ['card-title'], '6-6-66');
+        const iconElement = makeElement('p', ['card-text'], 'icon here??');
+        const tempElement = makeElement('p', ['card-text'], 'Temp: ' + 666);
+        const windElement = makeElement('p', ['card-text'], 'Wind: ' + 66);
+        const humidityElement = makeElement('p', ['card-text'], 'Humidity: ' + 99);
+        
+        const cardBodyElement = makeElement('div', ['card-body', 'p-2']);
+        cardBodyElement.appendChild(titleElement);
+        cardBodyElement.appendChild(iconElement);
+        cardBodyElement.appendChild(tempElement);
+        cardBodyElement.appendChild(windElement);
+        cardBodyElement.appendChild(humidityElement);
+
+        const cardElement = makeElement('div', ['card']);
+        cardElement.appendChild(cardBodyElement);
+
+        const colElement = makeElement('div', ['col']);
+        colElement.appendChild(cardElement);
+        forecastDiv.appendChild(colElement);
+    }
+};
+// makeForecastCards([]);
+
+// Initialize & start app.
+function init() {
+    // Pre-pop local storage.
+
+    // Update Display.
+    updateDisplay();
+}
+// change to es6
+// Start app.
+init();
 
 
 

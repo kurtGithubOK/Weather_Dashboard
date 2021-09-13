@@ -1,5 +1,5 @@
 header {
-    background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(59, 18, 238));
 }
 
 
@@ -8,27 +8,27 @@ header {
 
 }
 
-aside {
+/* aside {
     background-color: pink;
     /* height: 90%; */
-}
+} */
 
-article {
+/* article {
     background-color: lightblue;
-}
+} */
 
-.weatherData {
+#todaysWeather {
     border: 2px solid gray;
     /* height: 50%; */
 }
 
-#forecast {
+/* #forecast {
     list-style: none;
 
 }
 li.forecastDay {
     display: inline;
-}
+} */
 
 
 
