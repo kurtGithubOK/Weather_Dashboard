@@ -79,31 +79,22 @@ const populateTodaysWeather = data => {
 };
 
 const populateForecast = data => {
-
-
-    //         const forecastList = data.list;
-    //         const forecastArray = [];
-    //         for (let i = 0; i < 5; i++) {
-    //             const forecastListItem = forecastList[i];
-    //             const forecastArrayItem = [];
-    //             console.log('forecastListItem', forecastListItem);
-
-    //             // const date = forecastListItem.dt;
-    //             // console.log('date', date);
-    //             // const moment = moment(date, 'X');
-    //             // console.log('xxxxxx: ', moment.toString());
-
-    //             const temperature = forecastListItem.main.temp;
-    //             const windSpeed = forecastListItem.wind.speed;
-    //             const humidity = forecastListItem.main.humidity;
-    //             forecastListItem.temperature = temperature;
-    //             forecastListItem.windSpeed = windSpeed;
-    //             forecastListItem.humidity = humidity;
-    //             forecastArray.push(forecastListItem);
-    //             console.log('humidity', humidity)
-    //         }
-    //         return forecastArray;
-
+    const forecastDataList = data.list;
+    // Put data into array of objects for later use.
+    const forecastDataArray = [];
+    for (let i = 0; i < 5; i++) {
+        // Get element in array.
+        const forecastDataListItem = forecastDataList[i];
+        // Create an object to store forecast data.
+        const forecastObject = {};
+        const forecastTimestamp = moment(forecastDataListItem.dt, 'X');
+        forecastObject.forecastDate = forecastTimestamp.format('M-DD-YYYY');
+        forecastObject.temperature = forecastDataListItem.main.temp;
+        forecastObject.windSpeed = forecastDataListItem.wind.speed;
+        forecastObject.humidity = forecastDataListItem.main.humidity;
+        forecastDataArray.push(forecastObject);
+    }
+    return forecastDataArray;
 };
 
 const doFetch = (url) => {
