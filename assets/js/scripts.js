@@ -20,15 +20,119 @@ const forecastDiv = document.getElementById('forecast');
 
 // Register event handlers.
 searchButton.addEventListener('click', searchButtonClicked);
+//////////////////////////////////////////////////////////////////////////////////////////
+const appData = {
+    'seattle': {
+        lat: 3,
+        lon: 4,
+        timestamp: 22,
+        todaysWeather: {},
+        forecast: [
+            {
+                timestamp: '',
+                icon: '',
+                temp: 2,
+                wind: 4.4,
+                humidity: 3
+            }
+        ]
+    }
+};
+
+// API Callers ///////////////////////////////////////////////////////////////////////////////
+// Get weather data using one-call API.
+const getWeatherData = (cityCoords) => {
+    const weatherDataUrl = makeWeatherDataUrl(cityCoords);
+    console.log('left off here:', weatherDataUrl)
+    doFetch(weatherDataUrl)
+        .then((data) => {
+            const extractedForecastData = extractForecastData(data);
+            // Generate Cards for each forecast day.
+            makeForecastCards(extractedForecastData);
+        });
+};
+
+// Get lat & long for city name via API call.
+const getLatAndLonByCityName = (cityName) => {
+    // Make url.
+    const latAndLongUrl = makeLatAndLonUrl(cityName);
+    // Make API call.
+    doFetch(latAndLongUrl)
+        .then((data) => {
+            // Get lat and lon from response.
+            const cityCoords = txformLatAndLonData(data);
+
+            // Add code here to handle if data is bad...........................................
+
+            // Do this here?????????
+            // updateAppData(cityCoords);
+
+            // Now get weather data.
+            getWeatherData(cityCoords);
+        });
+}
+
+// Data Transformation Functions ///////////////////////////////////////////////////////////////
+const txformLatAndLonData = data => {
+    const cityName = data.name;
+    const cityLat = data.coord.lat;
+    const cityLon = data.coord.lon;
+    // console.log('xxxxx', cityName, cityLat, cityLon)
+    return { cityName, cityLat, cityLon }
+};
+
+// Utility Functions ////////////////////////////////////////////////////////////////////////
+const updateAppData = data => {
+    appData[data.cityName] = {
+        lat: data.cityLon,
+        lon: data.cityLon
+    };
+    // Save to local storage, too.
+    // localStorage.setItem('WeatherDashboard', JSON.stringify(appData));
+};
+
+const doFetch = (url) => {
+    return fetch(url)
+        .then(response => {
+            return response.json();
+        })
+        .catch(function (err) {
+            console.log("Something went wrong calling this url:", url, err);
+        });
+};
+
+const makeLatAndLonUrl = cityName => {
+    // 'https://api.openweathermap.org/data/2.5/weather?q=seattle&appid=f1904d406184f3cd6d2b1fa662fe0acf';
+    let url = openWeatherMapUrl;
+    url += 'weather';
+    url += '?q=' + cityName;
+    url += '&appId=' + apiKey;
+    return url;
+}
+
+const makeWeatherDataUrl = cityCoords => {
+    // 'https://api.openweathermap.org/data/2.5/onecall?lat=47.6062&lon=-122.3321&exclude={part}&appid=f1904d406184f3cd6d2b1fa662fe0acf';
+    let url = openWeatherMapUrl;
+    url += 'onecall';
+    url += '?lat=' + cityCoords.cityLat;
+    url += '&lon=' + cityCoords.cityLon;
+    url += '&exclude=minutely,hourly,alerts';
+    url += '&appId=' + apiKey;
+    return url;
+}
+
+getLatAndLonByCityName('anchorage'); // Runner
+
+// Display results.
+
 
 
 
 // Functions to update values displayed on page.
+// updateDisplay() just ties function calls together for updating parts of the display.
 function updateDisplay() {
-    // City search
     updateListOfCities();
     updateTodaysWeather();
-    // Forecast cards
     updateForecast();
 }
 
@@ -82,7 +186,7 @@ function cityClicked(event) {
 
 
 // Utility functions ////////////////////////////////////////////////////////////
-// Update display.
+// Update value in today's weather.
 const populateTodaysWeather = data => {
     todaysTempDiv.textContent = data.main.temp;
     todaysWindDiv.textContent = data.wind.speed;
@@ -124,6 +228,7 @@ const extractForecastData = data => {
     for (let i = 0; i < 5; i++) {
         // Get element in array.
         const forecastDataListItem = forecastDataList[i];
+        console.log('forecastDataListItem', forecastDataListItem)
         // Create an object to store forecast data.
         const forecastObject = {};
         const forecastTimestamp = moment(forecastDataListItem.dt, 'X');
@@ -144,16 +249,6 @@ const makeElement = (elementName, classArray, textContent) => {
     }
     element.textContent = textContent;
     return element;
-};
-
-const doFetch = (url) => {
-    return fetch(url)
-        .then(response => {
-            return response.json();
-        })
-        .catch(function (err) {
-            console.log("Something went wrong calling this url:", url, err);
-        });
 };
 
 const makeForecastWeatherUrl = (cityName) => {
