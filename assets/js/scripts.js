@@ -43,12 +43,12 @@ const appData = {
 // Get weather data using one-call API.
 const getWeatherData = (cityCoords) => {
     const weatherDataUrl = makeWeatherDataUrl(cityCoords);
-    console.log('left off here:', weatherDataUrl)
+    // console.log('left off here:', weatherDataUrl)
     doFetch(weatherDataUrl)
         .then((data) => {
-            const extractedForecastData = extractForecastData(data);
-            // Generate Cards for each forecast day.
-            makeForecastCards(extractedForecastData);
+            // const extractedForecastData = extractForecastData(data);
+            // // Generate Cards for each forecast day.
+            // makeForecastCards(extractedForecastData);
         });
 };
 
@@ -228,7 +228,7 @@ const extractForecastData = data => {
     for (let i = 0; i < 5; i++) {
         // Get element in array.
         const forecastDataListItem = forecastDataList[i];
-        console.log('forecastDataListItem', forecastDataListItem)
+        // console.log('forecastDataListItem', forecastDataListItem)
         // Create an object to store forecast data.
         const forecastObject = {};
         const forecastTimestamp = moment(forecastDataListItem.dt, 'X');
