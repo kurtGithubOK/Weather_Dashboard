@@ -35,7 +35,6 @@ const searchButton = document.getElementById('searchButton');
 const searchText = document.getElementById('searchText');
 const cityListDiv = document.getElementById('cityList');
 
-
 const cityAndDateDiv = document.getElementById('cityAndDate');
 const todaysTempDiv = document.getElementById('todaysTemp');
 const todaysWindDiv = document.getElementById('todaysWind');
@@ -46,6 +45,7 @@ const forecastDiv = document.getElementById('forecast');
 
 // Register event handlers.
 searchButton.addEventListener('click', searchButtonClicked);
+cityListDiv.addEventListener('click', cityClicked);
 
 // App starts here.
 const main = () => {
@@ -92,9 +92,9 @@ function searchButtonClicked(event) {
 }
 
 function cityClicked(event) {
-
+    currentCity = event.target.innerHTML;
+    getWeatherDataFromAPI();
 }
-
 
 
 // Functions for updating display /////////////////////////////////////////////////////////////////////////////
@@ -135,6 +135,10 @@ const updateTodaysWeather = () => {
 
 // Loop over forecast data & assemble Card divs from the inside out.
 const updateForecast = () => {
+    // First, clear out old entries.
+    while (forecastDiv.firstChild) {
+        forecastDiv.removeChild(forecastDiv.firstChild);
+    }
     const forecastWeather = appData[currentCity].forecast;
     for (let i = 0; i < forecastWeather.length; i++) {
         const forecastDay = forecastWeather[i];
