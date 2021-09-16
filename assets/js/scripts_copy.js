@@ -47,26 +47,18 @@ const forecastDiv = document.getElementById('forecast');
 // Register event handlers.
 searchButton.addEventListener('click', searchButtonClicked);
 
-// App starts here.  Called at bottom of file.
+// App starts here.
 const main = () => {
-    // Set global variable to whatever may be saved.
+    // Restore any saved data.
     appData = getSavedData();
-    currentCity = getDefaultCity();
-    // Call function to update display.
-    updateDisplay();
-}
-
-// Top-level function to get & display weather.
-const updateDisplay = () => {
-    // const weatherDataForDisplay = getWeatherData(cityName);
-    // if(!weatherDataForDisplay) return 'SOME KIND OF ERRO RMESSAGE!';
-    getWeatherDataFromAPI('seattle')
+    currentCity = 'seattle'; // Default city.
+    getWeatherDataFromAPI();
 }
 
 // Make API call to get fresh weather data.
 // First call API to get city's lat & lon, then another to get weather data.
-const getWeatherDataFromAPI = citySearchString => {
-    const url = makeLatAndLonUrl(citySearchString);
+const getWeatherDataFromAPI = () => {
+    const url = makeLatAndLonUrl(currentCity);
     doFetch(url)
         .then((cityCoordsFromAPI) => {
             // Get the city's lat & lon out of response.
@@ -85,13 +77,9 @@ const getWeatherDataFromAPI = citySearchString => {
                     appData[cityCoords.cityName].todaysWeather = transformedWeatherDataTodays;
                     appData[cityCoords.cityName].timestamp = transformedWeatherDataTodays.timestamp;
                     currentCity = cityCoords.cityName;
-                    // move above into save method?
-                    // saveWeatherData(transformedWeatherData);
                     const transformedWeatherDataForecast = transformWeatherDataForecast(weatherDataFromAPI);
                     appData[cityCoords.cityName].forecast = transformedWeatherDataForecast;
-
-                    // console.log('appData', appData)
-                    // Call update display here?
+                    saveAppData();
                     updateDisplayParts();
                 });
         });
@@ -99,7 +87,8 @@ const getWeatherDataFromAPI = citySearchString => {
 
 // Event handlers. ////////////////////////////////////////////////////////////
 function searchButtonClicked(event) {
-    const citySearchString = searchText.value;
+    currentCity = searchText.value;
+    getWeatherDataFromAPI();
 }
 
 function cityClicked(event) {
@@ -119,6 +108,11 @@ const updateDisplayParts = () => {
 
 // Loop over list of cities and make buttons for each.
 function updateListOfCities() {
+    // First, clear out old entries.
+    while (cityListDiv.firstChild) {
+        cityListDiv.removeChild(cityListDiv.firstChild);
+    }
+    // Now, generate buttons for each city.
     const previousCities = Object.keys(appData);
     previousCities.forEach((cityName) => {
         const buttonElement = document.createElement('button');
@@ -130,7 +124,7 @@ function updateListOfCities() {
 
 // Update values in today's weather.
 const updateTodaysWeather = () => {
-    const timestampMoment = moment(appData[currentCity].timestamp);
+    const timestampMoment = moment(appData[currentCity].timestamp, 'X');
     cityAndDateDiv.textContent = currentCity + ' (' + timestampMoment.format('M/DD/YYYY') + ')';
     const todaysWeather = appData[currentCity].todaysWeather;
     todaysTempDiv.textContent = todaysWeather.temp;
@@ -172,11 +166,6 @@ const updateForecast = () => {
         forecastDiv.appendChild(colElement);
     }
 };
-
-
-
-
-
 
 
 // Utility Functions //////////////////////////////////////////////////////////////////////////////////////////
@@ -235,15 +224,6 @@ const saveCityCoords = cityLatAndLon => {
     saveAppData();
 }
 
-// You need a city to start with so get the most recent from appData. 
-const getDefaultCity = () => {
-    const numExistingCities = Object.keys(appData).length;
-    if (!numExistingCities) {
-        currentCity = 'seattle';
-    } else {
-        // Do this later.
-    }
-};
 
 const doFetch = (url) => {
     return fetch(url)
