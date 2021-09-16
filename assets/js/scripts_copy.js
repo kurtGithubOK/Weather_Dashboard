@@ -30,6 +30,23 @@ let appData = {};  // Variable for storing/caching data.
     };
 */
 
+// Variables for divs.
+const searchButton = document.getElementById('searchButton');
+const searchText = document.getElementById('searchText');
+const cityListDiv = document.getElementById('cityList');
+
+
+const cityAndDateDiv = document.getElementById('cityAndDate');
+const todaysTempDiv = document.getElementById('todaysTemp');
+const todaysWindDiv = document.getElementById('todaysWind');
+const todaysHumidityDiv = document.getElementById('todaysHumidity');
+const todaysUVIndex = document.getElementById('todaysUVIndex');
+
+const forecastDiv = document.getElementById('forecast');
+
+// Register event handlers.
+searchButton.addEventListener('click', searchButtonClicked);
+
 // App starts here.  Called at bottom of file.
 const main = () => {
     // Set global variable to whatever may be saved.
@@ -39,27 +56,17 @@ const main = () => {
     updateDisplay();
 }
 
+// Top-level function to get & display weather.
 const updateDisplay = () => {
     // const weatherDataForDisplay = getWeatherData(cityName);
     // if(!weatherDataForDisplay) return 'SOME KIND OF ERRO RMESSAGE!';
-    // updateDisplayParts();
-
+    getWeatherDataFromAPI('seattle')
 }
-const getWeatherData = cityName => {
-
-};
-
-// Just combines calls to update various parts of page.
-const updateDisplayParts = () => {
-    updateListOfCities();
-    updateTodaysWeather();
-    updateForecast();
-};
 
 // Make API call to get fresh weather data.
 // First call API to get city's lat & lon, then another to get weather data.
-const getWeatherDataFromAPI = cityName => {
-    const url = makeLatAndLonUrl(cityName);
+const getWeatherDataFromAPI = citySearchString => {
+    const url = makeLatAndLonUrl(citySearchString);
     doFetch(url)
         .then((cityCoordsFromAPI) => {
             // Get the city's lat & lon out of response.
@@ -74,34 +81,132 @@ const getWeatherDataFromAPI = cityName => {
             doFetch(weatherDataUrl)
                 .then((weatherDataFromAPI) => {
                     // Get weather data out of response.
-                    const transformedWeatherData = transformWeatherData(cityName, weatherDataFromAPI);
+                    const transformedWeatherDataTodays = transformWeatherDataTodays(weatherDataFromAPI);
+                    appData[cityCoords.cityName].todaysWeather = transformedWeatherDataTodays;
+                    appData[cityCoords.cityName].timestamp = transformedWeatherDataTodays.timestamp;
+                    currentCity = cityCoords.cityName;
+                    // move above into save method?
                     // saveWeatherData(transformedWeatherData);
+                    const transformedWeatherDataForecast = transformWeatherDataForecast(weatherDataFromAPI);
+                    appData[cityCoords.cityName].forecast = transformedWeatherDataForecast;
+
+                    // console.log('appData', appData)
                     // Call update display here?
+                    updateDisplayParts();
                 });
         });
+};
+
+// Event handlers. ////////////////////////////////////////////////////////////
+function searchButtonClicked(event) {
+    const citySearchString = searchText.value;
+}
+
+function cityClicked(event) {
+
+}
+
+
+
+// Functions for updating display /////////////////////////////////////////////////////////////////////////////
+// Just combines calls to update various parts of page.
+const updateDisplayParts = () => {
+    updateListOfCities();
+    updateTodaysWeather();
+    updateForecast();
+};
+
+
+// Loop over list of cities and make buttons for each.
+function updateListOfCities() {
+    const previousCities = Object.keys(appData);
+    previousCities.forEach((cityName) => {
+        const buttonElement = document.createElement('button');
+        buttonElement.classList.add('btn', 'btn-secondary', 'w-100', 'my-1');  // Change other code like this.
+        buttonElement.textContent = cityName;
+        cityListDiv.appendChild(buttonElement);
+    });
+}
+
+// Update values in today's weather.
+const updateTodaysWeather = () => {
+    const timestampMoment = moment(appData[currentCity].timestamp);
+    cityAndDateDiv.textContent = currentCity + ' (' + timestampMoment.format('M/DD/YYYY') + ')';
+    const todaysWeather = appData[currentCity].todaysWeather;
+    todaysTempDiv.textContent = todaysWeather.temp;
+    todaysWindDiv.textContent = todaysWeather.speed;
+    todaysHumidityDiv.textContent = todaysWeather.humidity;
+    todaysUVIndex.textContent = todaysWeather.uvIndex;
+};
+
+// Loop over forecast data & assemble Card divs from the inside out.
+const updateForecast = () => {
+    const forecastWeather = appData[currentCity].forecast;
+    for (let i = 0; i < forecastWeather.length; i++) {
+        const forecastDay = forecastWeather[i];
+        const displayDate = moment(forecastDay.dt, 'X').format('M/DD/YYYY');
+        const titleElement = makeElement('h5', ['card-title', 'text-white'], displayDate);
+
+        // Do weather icon.
+        const iconElement = makeElement('p', ['card-text']);
+        const iconImage = new Image();
+        iconImage.src = 'http://openweathermap.org/img/wn/' + forecastDay.icon + '@2x.png';
+        iconElement.appendChild(iconImage)
+
+        const tempElement = makeElement('p', ['card-text', 'text-white'], 'Temp: ' + forecastDay.temp + '&deg; F');
+        const windElement = makeElement('p', ['card-text', 'text-white'], 'Wind: ' + forecastDay.wind + ' MPH');
+        const humidityElement = makeElement('p', ['card-text', 'text-white'], 'Humidity: ' + forecastDay.humidity + '%');
+
+        const cardBodyElement = makeElement('div', ['card-body', 'p-2', 'bg-primary']);
+        cardBodyElement.appendChild(titleElement);
+        cardBodyElement.appendChild(iconElement);
+        cardBodyElement.appendChild(tempElement);
+        cardBodyElement.appendChild(windElement);
+        cardBodyElement.appendChild(humidityElement);
+
+        const cardElement = makeElement('div', ['card']);
+        cardElement.appendChild(cardBodyElement);
+
+        const colElement = makeElement('div', ['col']);
+        colElement.appendChild(cardElement);
+        forecastDiv.appendChild(colElement);
+    }
 };
 
 
 
 
+
+
+
 // Utility Functions //////////////////////////////////////////////////////////////////////////////////////////
-// Function to transform API response to appData.
-const transformWeatherData = (cityName, weatherDataFromAPI) => {
-    const current = weatherDataFromAPI.current;
+// Function to txfer data from API response to object for appData.
+const transformWeatherDataForecast = weatherDataFromAPI => {
+    const forecastData = weatherDataFromAPI.daily; // Need subset of data.
+    const forecastArray = [];
+    for (let i = 0; i < 5; i++) {
+        const forecaseWeatherObject = {};
+        forecaseWeatherObject.dt = forecastData[i].dt;
+        forecaseWeatherObject.icon = forecastData[i].weather[0].icon;
+        forecaseWeatherObject.temp = forecastData[i].temp.day;
+        forecaseWeatherObject.wind = forecastData[i].wind_speed;
+        forecaseWeatherObject.humidity = forecastData[i].humidity;
+        forecastArray.push(forecaseWeatherObject);
+    }
+    return forecastArray;
+}
+
+// Function to pull today's weather from API.
+const transformWeatherDataTodays = (weatherDataFromAPI) => {
+    const current = weatherDataFromAPI.current; // Need subset of data.
     // Create object for today's weather and set on appData.
-    const todaysWeather = {};
-    todaysWeather.temp = current.temp;
-    todaysWeather.wind = current.wind_speed;
-    todaysWeather.humidity = current.temp;
-    todaysWeather.uvIndex = current.uvi;
-
-    console.log('todaysWeather', todaysWeather)
-    // do timestamp   
-
-
-
-
-
+    const todaysWeatherObject = {};
+    todaysWeatherObject.timestamp = current.dt;
+    todaysWeatherObject.temp = current.temp;
+    todaysWeatherObject.wind = current.wind_speed;
+    todaysWeatherObject.humidity = current.temp;
+    todaysWeatherObject.uvIndex = current.uvi;
+    return todaysWeatherObject;
 };
 
 // Function to transform API response to cityName, lat & lon.
@@ -110,6 +215,15 @@ const transformWeatherDataCoords = latAndLonFromAPI => {
     const cityLat = latAndLonFromAPI.coord.lat;
     const cityLon = latAndLonFromAPI.coord.lon;
     return { cityName, cityLat, cityLon }
+};
+
+
+// Utility to make a generic HTML element.
+const makeElement = (elementName, classArray, textContent = '') => {
+    const element = document.createElement(elementName);
+    element.classList.add(...classArray);
+    element.innerHTML = textContent;
+    return element;
 };
 
 // Function to add entry into appData for this city.
@@ -157,6 +271,7 @@ const makeWeatherDataUrl = cityCoords => {
     url += '?lat=' + cityCoords.cityLat;
     url += '&lon=' + cityCoords.cityLon;
     url += '&exclude=minutely,hourly,alerts';
+    url += '&units=imperial';
     url += '&appId=' + apiKey;
     return url;
 }
@@ -167,12 +282,11 @@ const getSavedData = () => {
 };
 
 const saveAppData = () => {
-    localStorage.setItem(appName, JSON.stringify(appData))
+    localStorage.setItem(appName, JSON.stringify(appData));
 };
 
 // Start app.
 main();
-getWeatherDataFromAPI('seattle')
 
 
 

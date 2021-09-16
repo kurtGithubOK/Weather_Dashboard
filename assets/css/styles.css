@@ -2,30 +2,7 @@ header {
     background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(59, 18, 238));
 }
 
-
-.container {
-    height: 100%;
-
-}
-
-/* article {
-    background-color: lightblue;
-} */
-
 #todaysWeather {
     border: 2px solid gray;
-    /* height: 50%; */
 }
-
-/* #forecast {
-    list-style: none;
-
-}
-li.forecastDay {
-    display: inline;
-} */
-
-
-
-
 

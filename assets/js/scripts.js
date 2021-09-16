@@ -39,10 +39,11 @@ const appData = {
     }
 };
 
+
 // API Callers ///////////////////////////////////////////////////////////////////////////////
 // Get weather data using one-call API.
 const getWeatherData = (cityCoords) => {
-    const weatherDataUrl = makeWeatherDataUrl(cityCoords);
+    const weatherDataUrl = makeForecastDataUrl(cityCoords);
     // console.log('left off here:', weatherDataUrl)
     doFetch(weatherDataUrl)
         .then((data) => {
@@ -110,7 +111,7 @@ const makeLatAndLonUrl = cityName => {
     return url;
 }
 
-const makeWeatherDataUrl = cityCoords => {
+const makeForecastDataUrl = cityCoords => {
     // 'https://api.openweathermap.org/data/2.5/onecall?lat=47.6062&lon=-122.3321&exclude={part}&appid=f1904d406184f3cd6d2b1fa662fe0acf';
     let url = openWeatherMapUrl;
     url += 'onecall';
@@ -186,7 +187,7 @@ function cityClicked(event) {
 
 
 // Utility functions ////////////////////////////////////////////////////////////
-// Update value in today's weather.
+// Update values in today's weather.
 const populateTodaysWeather = data => {
     todaysTempDiv.textContent = data.main.temp;
     todaysWindDiv.textContent = data.wind.speed;
